@@ -1,0 +1,990 @@
+/* ==========================================================================
+   css/style.css - İnteraktif İngilizce Öğrenme & Ezber Platformu
+   ========================================================================== */
+
+:root {
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --primary-light: #eff6ff;
+  --success: #10b981;
+  --success-light: #ecfdf5;
+  --warning: #f59e0b;
+  --warning-light: #fffbeb;
+  --danger: #ef4444;
+  --danger-light: #fef2f2;
+  --bg: #f8fafc;
+  --card-bg: #ffffff;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --row-hover: #f1f5f9;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg);
+  color: var(--text-main);
+  line-height: 1.5;
+  padding: 24px 16px;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* ==========================================================================
+   Üst Başlık & Sekme Navigasyonu
+   ========================================================================== */
+.header-card {
+  background: var(--card-bg);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  box-shadow: var(--shadow-md);
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+}
+
+.header-top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.header-title h1 {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-title p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* Sekmeler (Tabs) */
+.tab-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  background: #f1f5f9;
+  padding: 5px;
+  border-radius: var(--radius-md);
+}
+
+.tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border: none;
+  background: transparent;
+  color: #475569;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.tab-btn:hover {
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.tab-btn.active {
+  background: #ffffff;
+  color: var(--primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   İlerleme ve İstatistik Çubuğu
+   ========================================================================== */
+.stats-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px 18px;
+  margin-top: 12px;
+}
+
+.mastery-badges {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.badge-new {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.badge-learning {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.badge-mastered {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.progress-wrap {
+  flex: 1;
+  min-width: 200px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.progress-bar-bg {
+  flex: 1;
+  height: 8px;
+  background-color: #e2e8f0;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #10b981, #059669);
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   Ortak Butonlar ve Arama
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 14px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background-color: #ffffff;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.btn:hover {
+  background-color: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+  border-color: var(--primary-hover);
+}
+
+.btn-success {
+  background-color: var(--success);
+  color: #ffffff;
+  border-color: var(--success);
+}
+
+.btn-success:hover {
+  background-color: #059669;
+}
+
+.btn-danger {
+  color: var(--danger);
+}
+
+.btn-danger:hover {
+  background-color: var(--danger-light);
+  border-color: #fca5a5;
+}
+
+.btn-icon {
+  padding: 6px 10px;
+  font-size: 0.95rem;
+  line-height: 1;
+  border-radius: var(--radius-sm);
+}
+
+.btn-audio {
+  background: none;
+  border: 1px solid transparent;
+  color: var(--primary);
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 4px;
+  transition: all 0.15s;
+}
+
+.btn-audio:hover {
+  background-color: var(--primary-light);
+  border-color: #bfdbfe;
+}
+
+/* Arama Kutusu */
+.search-box {
+  position: relative;
+  min-width: 250px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 8px 12px 8px 34px;
+  font-size: 0.88rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.search-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+  font-size: 0.9rem;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   SEKME 1: AKILLI TABLO
+   ========================================================================== */
+.table-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.table-controls-left {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.table-container {
+  background: var(--card-bg);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+  overflow-x: auto;
+  max-height: 72vh;
+  position: relative;
+}
+
+table.oe-blog {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.92rem;
+}
+
+table.oe-blog thead th {
+  position: sticky;
+  top: 0;
+  background-color: #f8fafc;
+  z-index: 10;
+  padding: 12px 14px;
+  font-weight: 600;
+  color: #334155;
+  border-bottom: 2px solid var(--border);
+  white-space: nowrap;
+}
+
+table.oe-blog tbody td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+table.oe-blog tbody tr:hover {
+  background-color: var(--row-hover);
+}
+
+.col-no {
+  width: 50px;
+  text-align: center;
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.col-status-dot {
+  width: 30px;
+  text-align: center;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.dot-new { background-color: var(--danger); }
+.dot-learning { background-color: var(--warning); }
+.dot-mastered { background-color: var(--success); }
+
+.col-word {
+  width: 160px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-main);
+  white-space: nowrap;
+}
+
+.word-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.col-input {
+  min-width: 250px;
+  position: relative;
+}
+
+/* Öğrenci Inputu ve Anlamsal Renk Skalası */
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.student-input {
+  width: 100%;
+  padding: 8px 50px 8px 12px;
+  font-size: 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background-color: #ffffff;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.student-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+/* Benzerlik Skoru Rozeti (Input içinde sağda) */
+.sim-score-badge {
+  position: absolute;
+  right: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.sim-score-badge.show {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   ANLAMSAL BENZERLİK RENK SKALASI (SEMANTIC COLOR SCALE)
+   ========================================================================== */
+/* Mükemmel Eşleşme (%85 - 100): Canlı Yeşil */
+.student-input.sim-perfect {
+  background-color: #ecfdf5 !important;
+  border-color: #10b981 !important;
+  color: #065f46;
+}
+.sim-score-badge.sim-perfect {
+  background-color: #10b981;
+  color: #ffffff;
+}
+
+/* Yakın / İyi Eşleşme (%60 - 84): Sarı-Yeşil */
+.student-input.sim-good {
+  background-color: #f7fee7 !important;
+  border-color: #84cc16 !important;
+  color: #3f6212;
+}
+.sim-score-badge.sim-good {
+  background-color: #84cc16;
+  color: #ffffff;
+}
+
+/* Kısmi Eşleşme (%35 - 59): Sarı / Turuncu */
+.student-input.sim-partial {
+  background-color: #fffbeb !important;
+  border-color: #f59e0b !important;
+  color: #92400e;
+}
+.sim-score-badge.sim-partial {
+  background-color: #f59e0b;
+  color: #ffffff;
+}
+
+/* Düşük / Uyuşmayan (<%35): Açık Kırmızı */
+.student-input.sim-low {
+  background-color: #fff1f2 !important;
+  border-color: #fca5a5 !important;
+  color: #9f1239;
+}
+.sim-score-badge.sim-low {
+  background-color: #f43f5e;
+  color: #ffffff;
+}
+
+/* Gizleme Sınıfı */
+.hidden {
+  display: none !important;
+}
+
+.col-meaning {
+  min-width: 240px;
+  color: #334155;
+  font-size: 0.88rem;
+}
+
+.col-example {
+  min-width: 270px;
+  color: #475569;
+  font-style: italic;
+  font-size: 0.88rem;
+}
+
+.col-actions {
+  width: 80px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   SEKME 2: 3D FLASHCARD MODU
+   ========================================================================== */
+.flashcard-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.fc-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* 3D Kart Sahnesi */
+.card-scene {
+  width: 100%;
+  max-width: 580px;
+  height: 330px;
+  perspective: 1000px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.flashcard {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.flashcard.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: var(--radius-lg);
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: 1px solid var(--border);
+  background: #ffffff;
+}
+
+.card-front {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+}
+
+.card-front .fc-badge {
+  position: absolute;
+  top: 18px;
+  left: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.card-front .fc-word {
+  font-size: 2.3rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 12px;
+}
+
+.card-front .fc-listen-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background-color: var(--primary-light);
+  color: var(--primary);
+  border: 1px solid #bfdbfe;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.card-front .fc-listen-btn:hover {
+  background-color: #dbeafe;
+}
+
+.card-front .fc-hint {
+  position: absolute;
+  bottom: 18px;
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.card-back {
+  background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+  transform: rotateY(180deg);
+}
+
+.card-back .fc-meaning {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #065f46;
+  margin-bottom: 12px;
+  max-width: 90%;
+}
+
+.card-back .fc-example {
+  font-size: 0.95rem;
+  color: #475569;
+  font-style: italic;
+  max-width: 90%;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px dashed #cbd5e1;
+}
+
+/* Flashcard Kontrolleri */
+.fc-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 580px;
+  margin-top: 24px;
+  gap: 12px;
+}
+
+.fc-feedback-group {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-hard {
+  background-color: #fee2e2;
+  color: #991b1b;
+  border-color: #fca5a5;
+  font-weight: 600;
+}
+.btn-hard:hover {
+  background-color: #fecaca;
+}
+
+.btn-easy {
+  background-color: #d1fae5;
+  color: #065f46;
+  border-color: #6ee7b7;
+  font-weight: 600;
+}
+.btn-easy:hover {
+  background-color: #a7f3d0;
+}
+
+/* ==========================================================================
+   SEKME 3: QUIZ / TEST MODU
+   ========================================================================== */
+.quiz-view {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 16px 0;
+}
+
+.quiz-card {
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+  padding: 28px;
+}
+
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.quiz-score-badge {
+  font-weight: 700;
+  color: var(--primary);
+  background: var(--primary-light);
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.88rem;
+}
+
+.quiz-question-box {
+  text-align: center;
+  padding: 20px 0 28px 0;
+}
+
+.quiz-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+.quiz-target-word {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* Şıklar (4 Seçenek) */
+.quiz-options {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+@media (min-width: 540px) {
+  .quiz-options {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.quiz-opt-btn {
+  padding: 14px 16px;
+  text-align: left;
+  background-color: #f8fafc;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  line-height: 1.35;
+}
+
+.quiz-opt-btn:hover:not(:disabled) {
+  background-color: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.quiz-opt-btn.correct {
+  background-color: #ecfdf5 !important;
+  border-color: #10b981 !important;
+  color: #065f46 !important;
+  font-weight: 600;
+}
+
+.quiz-opt-btn.wrong {
+  background-color: #fef2f2 !important;
+  border-color: #ef4444 !important;
+  color: #991b1b !important;
+  text-decoration: line-through;
+}
+
+.quiz-feedback {
+  min-height: 40px;
+  margin-top: 14px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.quiz-result-card {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.quiz-result-score {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin: 16px 0;
+}
+
+/* ==========================================================================
+   SEKME 4: İSTATİSTİKLER & DESTE YÖNETİMİ
+   ========================================================================== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: #ffffff;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-card h3 {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.stat-number {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.stat-card.mastered .stat-number { color: var(--success); }
+.stat-card.learning .stat-number { color: var(--warning); }
+.stat-card.new .stat-number { color: var(--danger); }
+
+/* ==========================================================================
+   Modal & Toast
+   ========================================================================== */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(2px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 16px;
+}
+
+.modal-backdrop.active {
+  display: flex;
+}
+
+.modal {
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 650px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+.modal-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h2 {
+  font-size: 1.15rem;
+  color: var(--text-main);
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: #94a3b8;
+  line-height: 1;
+}
+
+.modal-body {
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.bulk-textarea {
+  width: 100%;
+  height: 200px;
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.85rem;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  outline: none;
+  resize: vertical;
+}
+
+.bulk-textarea:focus {
+  border-color: var(--primary);
+}
+
+.format-hint {
+  background-color: #f1f5f9;
+  padding: 12px 14px;
+  border-radius: 8px;
+  margin-top: 12px;
+  font-size: 0.82rem;
+  color: #475569;
+}
+
+.format-hint code {
+  background-color: #e2e8f0;
+  padding: 2px 5px;
+  border-radius: 4px;
+  color: #0f172a;
+}
+
+.modal-footer {
+  padding: 14px 20px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  background-color: #f8fafc;
+}
+
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background-color: #0f172a;
+  color: #ffffff;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.25s ease;
+  z-index: 200;
+}
+
+.toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  body { padding: 12px 8px; }
+  .header-card { padding: 16px; }
+  .tab-btn { padding: 6px 12px; font-size: 0.82rem; }
+  .card-scene { height: 280px; }
+  .card-front .fc-word { font-size: 1.8rem; }
+}

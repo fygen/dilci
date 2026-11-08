@@ -3,520 +3,265 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>İngilizce Kelime Öğrenme ve Çalışma Tablosu</title>
-  <style>
-    :root {
-      --primary-color: #2563eb;
-      --primary-hover: #1d4ed8;
-      --bg-color: #f8fafc;
-      --card-bg: #ffffff;
-      --text-color: #1e293b;
-      --border-color: #e2e8f0;
-      --row-hover: #f1f5f9;
-      --success-color: #10b981;
-      --focus-ring: rgba(37, 99, 235, 0.15);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      padding: 24px 16px;
-      line-height: 1.5;
-    }
-
-    .container {
-      max-width: 1300px;
-      margin: 0 auto;
-    }
-
-    /* Üst Bilgi Kartı */
-    .header-card {
-      background: var(--card-bg);
-      border-radius: 12px;
-      padding: 24px;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-      margin-bottom: 20px;
-      border: 1px solid var(--border-color);
-    }
-
-    .header-card h1 {
-      font-size: 1.5rem;
-      margin-bottom: 6px;
-      color: #0f172a;
-    }
-
-    .header-card p {
-      color: #64748b;
-      font-size: 0.92rem;
-      margin-bottom: 16px;
-    }
-
-    /* Kontrol Paneli */
-    .controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .button-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 8px 14px;
-      font-size: 0.88rem;
-      font-weight: 500;
-      border-radius: 8px;
-      border: 1px solid var(--border-color);
-      background-color: #ffffff;
-      color: #334155;
-      cursor: pointer;
-      transition: all 0.15s ease-in-out;
-      user-select: none;
-    }
-
-    .btn:hover {
-      background-color: #f8fafc;
-      border-color: #cbd5e1;
-    }
-
-    .btn-primary {
-      background-color: var(--primary-color);
-      color: #ffffff;
-      border-color: var(--primary-color);
-    }
-
-    .btn-primary:hover {
-      background-color: var(--primary-hover);
-      border-color: var(--primary-hover);
-    }
-
-    .btn-danger {
-      color: #ef4444;
-    }
-
-    .btn-danger:hover {
-      background-color: #fef2f2;
-      border-color: #fca5a5;
-    }
-
-    .search-box {
-      position: relative;
-      min-width: 260px;
-    }
-
-    .search-input {
-      width: 100%;
-      padding: 8px 12px 8px 34px;
-      font-size: 0.88rem;
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      outline: none;
-      transition: border-color 0.15s, box-shadow 0.15s;
-    }
-
-    .search-input:focus {
-      border-color: var(--primary-color);
-      box-shadow: 0 0 0 3px var(--focus-ring);
-    }
-
-    .search-icon {
-      position: absolute;
-      left: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #94a3b8;
-      font-size: 0.9rem;
-      pointer-events: none;
-    }
-
-    /* İlerleme Çubuğu */
-    .progress-section {
-      margin-top: 16px;
-      padding-top: 16px;
-      border-top: 1px solid var(--border-color);
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .progress-bar-bg {
-      flex: 1;
-      height: 8px;
-      background-color: #e2e8f0;
-      border-radius: 999px;
-      overflow: hidden;
-    }
-
-    .progress-bar-fill {
-      height: 100%;
-      background-color: var(--success-color);
-      width: 0%;
-      transition: width 0.3s ease;
-    }
-
-    .progress-text {
-      font-size: 0.85rem;
-      color: #64748b;
-      white-space: nowrap;
-      font-weight: 500;
-    }
-
-    /* Tablo Alanı */
-    .table-container {
-      background: var(--card-bg);
-      border-radius: 12px;
-      border: 1px solid var(--border-color);
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-      overflow-x: auto;
-      max-height: 75vh;
-      position: relative;
-    }
-
-    table.oe-blog {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-      font-size: 0.92rem;
-    }
-
-    table.oe-blog thead th {
-      position: sticky;
-      top: 0;
-      background-color: #f8fafc;
-      z-index: 10;
-      padding: 12px 16px;
-      font-weight: 600;
-      color: #334155;
-      border-bottom: 2px solid var(--border-color);
-      white-space: nowrap;
-    }
-
-    table.oe-blog tbody td {
-      padding: 12px 16px;
-      border-bottom: 1px solid var(--border-color);
-      vertical-align: middle;
-    }
-
-    table.oe-blog tbody tr:hover {
-      background-color: var(--row-hover);
-    }
-
-    .col-no {
-      width: 60px;
-      text-align: center;
-      color: #64748b;
-      font-weight: 500;
-    }
-
-    .col-word {
-      width: 140px;
-      font-size: 1rem;
-      color: #0f172a;
-      white-space: nowrap;
-    }
-
-    .col-input {
-      min-width: 240px;
-    }
-
-    .student-input {
-      width: 100%;
-      padding: 8px 12px;
-      font-size: 0.9rem;
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      background-color: #ffffff;
-      outline: none;
-      transition: all 0.15s ease-in-out;
-    }
-
-    .student-input:focus {
-      border-color: var(--primary-color);
-      box-shadow: 0 0 0 3px var(--focus-ring);
-      background-color: #f8fafc;
-    }
-
-    .student-input.filled {
-      border-color: #86efac;
-      background-color: #f0fdf4;
-    }
-
-    .col-meaning {
-      min-width: 260px;
-      color: #334155;
-      line-height: 1.45;
-    }
-
-    .col-example {
-      min-width: 280px;
-      color: #475569;
-      font-style: italic;
-      line-height: 1.45;
-    }
-
-    .col-actions {
-      width: 70px;
-      text-align: center;
-      white-space: nowrap;
-    }
-
-    .btn-peek {
-      padding: 5px 9px;
-      background-color: #f8fafc;
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 0.88rem;
-      transition: all 0.15s;
-    }
-
-    .btn-peek:hover {
-      background-color: #e2e8f0;
-      border-color: #cbd5e1;
-    }
-
-    /* ========================================================= */
-    /* GİZLEME SINIFI (HIDDEN CLASS)                             */
-    /* Koddan 'hidden' class'ını sildiğinizde veya butondan      */
-    /* açtığınızda Türkçe anlamlar ve örnekler görünür hale gelir.*/
-    /* ========================================================= */
-    .hidden {
-      display: none !important;
-    }
-
-    /* Modal / Pop-up Stilleri */
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background-color: rgba(15, 23, 42, 0.5);
-      backdrop-filter: blur(2px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 100;
-      padding: 16px;
-    }
-
-    .modal-backdrop.active {
-      display: flex;
-    }
-
-    .modal {
-      background: #ffffff;
-      border-radius: 12px;
-      width: 100%;
-      max-width: 650px;
-      max-height: 90vh;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-    }
-
-    .modal-header {
-      padding: 16px 20px;
-      border-bottom: 1px solid var(--border-color);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .modal-header h2 {
-      font-size: 1.15rem;
-      color: #0f172a;
-    }
-
-    .modal-close {
-      background: none;
-      border: none;
-      font-size: 1.3rem;
-      cursor: pointer;
-      color: #94a3b8;
-      line-height: 1;
-    }
-
-    .modal-close:hover {
-      color: #334155;
-    }
-
-    .modal-body {
-      padding: 20px;
-      overflow-y: auto;
-    }
-
-    .modal-body p {
-      font-size: 0.88rem;
-      color: #64748b;
-      margin-bottom: 12px;
-    }
-
-    .bulk-textarea {
-      width: 100%;
-      height: 200px;
-      font-family: SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      font-size: 0.85rem;
-      padding: 12px;
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      outline: none;
-      resize: vertical;
-    }
-
-    .bulk-textarea:focus {
-      border-color: var(--primary-color);
-    }
-
-    .format-hint {
-      background-color: #f1f5f9;
-      padding: 12px 14px;
-      border-radius: 8px;
-      margin-top: 12px;
-      font-size: 0.82rem;
-      color: #475569;
-      line-height: 1.5;
-    }
-
-    .format-hint code {
-      background-color: #e2e8f0;
-      padding: 2px 5px;
-      border-radius: 4px;
-      color: #0f172a;
-      font-size: 0.8rem;
-    }
-
-    .modal-footer {
-      padding: 14px 20px;
-      border-top: 1px solid var(--border-color);
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-      background-color: #f8fafc;
-    }
-
-    /* Toast Bildirim */
-    .toast {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      background-color: #0f172a;
-      color: #ffffff;
-      padding: 10px 18px;
-      border-radius: 8px;
-      font-size: 0.88rem;
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
-      transform: translateY(100px);
-      opacity: 0;
-      transition: all 0.25s ease;
-      z-index: 200;
-    }
-
-    .toast.show {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  </style>
+  <title>İngilizce Kelime Öğrenme & Ezber Platformu</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <div class="container">
-  <!-- Üst Başlık ve Bilgi Alanı -->
+  <!-- Üst Başlık ve Dashboard Kartı -->
   <div class="header-card">
-    <h1>İngilizce Kelime Çalışma & Ezber Tablosu</h1>
-    <p>Kelimenin İngilizcesine bakıp anlamını tahmin kutucuğuna yazın. Türkçe anlamlar ve örnek kullanımlar varsayılan olarak gizlidir.</p>
+    <div class="header-top">
+      <div class="header-title">
+        <h1>🎓 İngilizce Kelime & Ezber Platformu</h1>
+        <p>Kelime tablosu, anlamsal doğruluk analizi, 3D Flashcard ve Quiz modları ile akıllı İngilizce çalışın.</p>
+      </div>
 
-    <!-- Kontrol Butonları -->
-    <div class="controls">
-      <div class="button-group">
-        <button type="button" class="btn" id="btnToggleMeanings" onclick="toggleAllMeanings()">
-          👁️ <span id="txtMeaningToggle">Türkçe Anlamları Göster</span>
+      <!-- Sekme Navigasyonu -->
+      <div class="tab-nav">
+        <button type="button" class="tab-btn active" data-tab="table">📋 Akıllı Tablo</button>
+        <button type="button" class="tab-btn" data-tab="flashcard">🎴 Flashcard</button>
+        <button type="button" class="tab-btn" data-tab="quiz">🎯 Hızlı Quiz</button>
+        <button type="button" class="tab-btn" data-tab="stats">📊 İstatistikler</button>
+      </div>
+    </div>
+
+    <!-- İlerleme ve İstatistik Çubuğu -->
+    <div class="stats-banner">
+      <div class="mastery-badges">
+        <span class="badge-pill badge-new" id="globalNewCount">0 Yeni</span>
+        <span class="badge-pill badge-learning" id="globalLearningCount">0 Tekrar</span>
+        <span class="badge-pill badge-mastered" id="globalMasteredCount">0 Ezberlendi</span>
+      </div>
+
+      <div class="progress-wrap">
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-text" id="progressText">%0</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================== -->
+  <!-- SEKME 1: AKILLI TABLO                                                  -->
+  <!-- ====================================================================== -->
+  <div id="tab-table" class="tab-content active">
+    <!-- Kontrol Paneli -->
+    <div class="table-controls">
+      <div class="table-controls-left">
+        <button type="button" class="btn" id="btnToggleMeanings" onclick="window.app.toggleAllMeanings()">
+          👁️ <span id="txtMeaningToggle">Anlamları Göster</span>
         </button>
-        <button type="button" class="btn" id="btnToggleExamples" onclick="toggleAllExamples()">
+        <button type="button" class="btn" id="btnToggleExamples" onclick="window.app.toggleAllExamples()">
           👁️ <span id="txtExampleToggle">Örnekleri Göster</span>
         </button>
-        <button type="button" class="btn btn-primary" onclick="openBulkModal()">
+        <button type="button" class="btn btn-primary" onclick="window.app.openBulkModal()">
           ➕ Toplu Veri Ekle
         </button>
-        <button type="button" class="btn" onclick="exportDataJson()">
+        <button type="button" class="btn" onclick="window.app.exportDataJson()">
           📥 JSON Dışa Aktar
         </button>
-        <button type="button" class="btn btn-danger" onclick="clearUserInputs()">
-          🔄 Cevapları Temizle
+        <button type="button" class="btn btn-danger" onclick="window.app.clearAllAnswers()">
+          🔄 Cevapları Sıfırla
         </button>
       </div>
 
       <div class="search-box">
         <span class="search-icon">🔍</span>
-        <input type="text" class="search-input" id="searchInput" placeholder="Kelime veya anlam ara..." oninput="filterTable()">
+        <input type="text" class="search-input" id="searchInput" placeholder="Kelime veya anlam ara...">
       </div>
     </div>
 
-    <!-- İlerleme Çubuğu -->
-    <div class="progress-section">
-      <div class="progress-bar-bg">
-        <div class="progress-bar-fill" id="progressFill"></div>
-      </div>
-      <div class="progress-text" id="progressText">0 / 0 tamamlandı (%0)</div>
+    <!-- Dinamik Tablo -->
+    <div class="table-container">
+      <table class="oe-blog" id="vocabTable">
+        <thead>
+          <tr>
+            <th class="col-no">No</th>
+            <th class="col-status-dot" title="Öğrenme Durumu">Durum</th>
+            <th class="col-word">İngilizce Kelime</th>
+            <th class="col-input">Cevabınız (Anlam Tahmini)</th>
+            <!-- Not: Aşağıdaki 'hidden' sınıfı koddan silindiğinde sütun doğrudan açık başlar -->
+            <th class="col-meaning hidden" id="thMeaning">Türkçe Çevirisi</th>
+            <th class="col-example hidden" id="thExample">Örnek Kullanım</th>
+            <th class="col-actions">İpucu</th>
+          </tr>
+        </thead>
+        <tbody id="vocabTableBody">
+          <!-- JavaScript ile dinamik olarak doldurulacaktır -->
+        </tbody>
+      </table>
     </div>
   </div>
 
-  <!-- Dinamik Tablo -->
-  <div class="table-container">
-    <table class="oe-blog" id="vocabTable">
-      <thead>
-        <tr>
-          <th class="col-no">No</th>
-          <th class="col-word">İngilizce Kelime</th>
-          <th class="col-input">Cevabınız (Çalışma / Tahmin)</th>
-          <!-- Not: Aşağıdaki 'hidden' class'ını sildiğinizde sütun direkt açık başlar -->
-          <th class="col-meaning hidden" id="thMeaning">Türkçe Çevirisi</th>
-          <th class="col-example hidden" id="thExample">Örnek Kullanım</th>
-          <th class="col-actions">İpucu</th>
-        </tr>
-      </thead>
-      <tbody id="vocabTableBody">
-        <!-- JavaScript ile dinamik olarak doldurulacaktır -->
-      </tbody>
-    </table>
+  <!-- ====================================================================== -->
+  <!-- SEKME 2: 3D FLASHCARD MODU                                             -->
+  <!-- ====================================================================== -->
+  <div id="tab-flashcard" class="tab-content">
+    <div class="flashcard-view">
+      <div class="fc-meta">
+        <div class="button-group">
+          <button type="button" class="btn btn-sm" onclick="window.app.initFlashcards('all')">Tüm Kelimeler</button>
+          <button type="button" class="btn btn-sm" onclick="window.app.initFlashcards('learning')">Tekrar Edilecekler</button>
+          <button type="button" class="btn btn-sm" onclick="window.app.initFlashcards('new')">Yeni Kelimeler</button>
+        </div>
+        <div id="fcCounter" style="font-weight: 700; color: #475569;">1 / 100</div>
+      </div>
+
+      <!-- 3D Kart Sahnesi -->
+      <div class="card-scene" id="fcScene" onclick="window.app.flipFlashcard()">
+        <div class="flashcard" id="fcCard">
+          <!-- Kartın Ön Yüzü -->
+          <div class="card-face card-front">
+            <span class="badge-pill" id="fcStatusBadge">Yeni</span>
+            <div class="fc-word" id="fcWord">Word</div>
+            <button type="button" class="fc-listen-btn" onclick="event.stopPropagation(); window.app.speakWord(document.getElementById('fcWord').textContent)">
+              🔊 Telaffuz Et
+            </button>
+            <div class="fc-hint">Kartı çevirmek için tıklayın veya [Boşluk / Space] tuşuna basın</div>
+          </div>
+
+          <!-- Kartın Arka Yüzü -->
+          <div class="card-face card-back">
+            <div class="fc-meaning" id="fcMeaning">Türkçe Anlamı</div>
+            <div class="fc-example" id="fcExample">"Örnek Cümle"</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="fcEmptyMsg" style="display: none; padding: 40px; text-align: center; color: #64748b;">
+        Bu kategoride gösterilecek kart bulunamadı.
+      </div>
+
+      <!-- Kart Kontrolleri -->
+      <div class="fc-controls">
+        <button type="button" class="btn" onclick="window.app.prevFlashcard()">⬅️ Önceki</button>
+        
+        <div class="fc-feedback-group">
+          <button type="button" class="btn btn-hard" title="Klavye Kısayolu: Z" onclick="window.app.answerFlashcard(false)">
+            ❌ Zorlandım (Z)
+          </button>
+          <button type="button" class="btn btn-easy" title="Klavye Kısayolu: K" onclick="window.app.answerFlashcard(true)">
+            ✅ Kolay / Biliyorum (K)
+          </button>
+        </div>
+
+        <button type="button" class="btn" onclick="window.app.nextFlashcard()">Sonraki ➡️</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================== -->
+  <!-- SEKME 3: HIZLI QUIZ / TEST MODU                                        -->
+  <!-- ====================================================================== -->
+  <div id="tab-quiz" class="tab-content">
+    <div class="quiz-view">
+      <!-- Soru Çözüm Ekranı -->
+      <div class="quiz-card" id="quizPlayingView">
+        <div class="quiz-header">
+          <span style="font-weight: 600; color: #64748b;" id="quizCounter">Soru 1 / 10</span>
+          <span class="quiz-score-badge" id="quizScore">Skor: 0</span>
+        </div>
+
+        <div class="quiz-question-box">
+          <div class="quiz-label">Bu kelimenin Türkçe anlamı nedir?</div>
+          <div class="quiz-target-word">
+            <span id="quizTargetWord">Word</span>
+            <button type="button" class="btn-audio" onclick="window.app.speakWord(document.getElementById('quizTargetWord').textContent)">🔊</button>
+          </div>
+        </div>
+
+        <!-- 4 Şık -->
+        <div class="quiz-options" id="quizOptions">
+          <!-- Dinamik Butonlar -->
+        </div>
+
+        <!-- Anlık Geri Bildirim -->
+        <div class="quiz-feedback" id="quizFeedback"></div>
+      </div>
+
+      <!-- Test Bitiş / Sonuç Ekranı -->
+      <div class="quiz-card quiz-result-card" id="quizResultView" style="display: none;">
+        <h2>🎉 Test Tamamlandı!</h2>
+        <div class="quiz-result-score" id="quizFinalScore">%0</div>
+        <p style="color: #64748b; margin-bottom: 24px;" id="quizFinalDetail">10 sorudan 0 tanesini doğru bildiniz.</p>
+        <button type="button" class="btn btn-primary" onclick="window.app.startQuiz(10)">
+          🔄 Yeniden 10 Soruluk Quiz Başlat
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================== -->
+  <!-- SEKME 4: İSTATİSTİKLER & DESTE YÖNETİMİ                                 -->
+  <!-- ====================================================================== -->
+  <div id="tab-stats" class="tab-content">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>Toplam Kelime</h3>
+        <div class="stat-number" id="statTotalWords">0</div>
+        <p style="font-size: 0.85rem; color: #64748b;">Kütüphanenizdeki aktif kelime sayısı</p>
+      </div>
+
+      <div class="stat-card mastered">
+        <h3>🟢 Ezberlenenler</h3>
+        <div class="stat-number" id="statMastered">0</div>
+        <p style="font-size: 0.85rem; color: #065f46;">Doğruluk oranı yüksek & pekiştirilmiş</p>
+      </div>
+
+      <div class="stat-card learning">
+        <h3>🟡 Tekrar Edilecekler</h3>
+        <div class="stat-number" id="statLearning">0</div>
+        <p style="font-size: 0.85rem; color: #92400e;">Zorlanılan veya pekişmesi gerekenler</p>
+      </div>
+
+      <div class="stat-card new">
+        <h3>🔴 Henüz Başlanmayan</h3>
+        <div class="stat-number" id="statNew">0</div>
+        <p style="font-size: 0.85rem; color: #991b1b;">Henüz pratik yapılmamış kelimeler</p>
+      </div>
+    </div>
+
+    <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 12px; padding: 24px; text-align: center;">
+      <h3 style="margin-bottom: 12px; font-size: 1.1rem;">Hızlı Pratik Başlat</h3>
+      <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 18px;">Öğrenme veriminizi artırmak için zayıf olduğunuz kelimelere odaklanın.</p>
+      <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
+        <button type="button" class="btn btn-primary" onclick="window.app.switchTab('flashcard'); window.app.initFlashcards('learning');">
+          🎴 Tekrar Edileceklerle Flashcard Aç
+        </button>
+        <button type="button" class="btn" onclick="window.app.switchTab('quiz'); window.app.startQuiz(10);">
+          🎯 Rastgele 10 Kelimelik Quiz Çöz
+        </button>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- Toplu Veri Ekleme Modal -->
-<div class="modal-backdrop" id="bulkModal" onclick="if(event.target === this) closeBulkModal()">
+<!-- ======================================================================== -->
+<!-- TOPLU VERİ EKLEME MODAL                                                  -->
+<!-- ======================================================================== -->
+<div class="modal-backdrop" id="bulkModal" onclick="if(event.target === this) window.app.closeBulkModal()">
   <div class="modal">
     <div class="modal-header">
-      <h2>Toplu Kelime Ekle</h2>
-      <button class="modal-close" onclick="closeBulkModal()">&times;</button>
+      <h2>➕ Toplu Kelime Ekle</h2>
+      <button class="modal-close" onclick="window.app.closeBulkModal()">&times;</button>
     </div>
     <div class="modal-body">
-      <p>Aşağıdaki alana istediğiniz kadar kelimeyi yapıştırıp tek seferde tabloya ekleyebilirsiniz.</p>
+      <p>Aşağıdaki alana istediğiniz kadar kelimeyi yapıştırıp tek seferde tabloya ve sisteminize ekleyebilirsiniz.</p>
       <textarea id="bulkInput" class="bulk-textarea" placeholder="Kelime | Türkçe Çevirisi | Örnek Cümle&#10;apple | elma | An apple a day keeps the doctor away&#10;book | kitap | I like reading books"></textarea>
       
       <div class="format-hint">
         <strong>Desteklenen Formatlar (Satır satır):</strong><br>
         1. Düz Çizgi: <code>Kelime | Türkçe Anlamı | Örnek Kullanım</code><br>
-        2. Excel / Google Sheets: Tab tuşuyla ayrılmış hücreleri doğrudan yapıştırabilirsiniz.<br>
+        2. Excel / Google Sheets: Tab tuşuyla ayrılmış hücreleri doğrudan kopyalayıp yapıştırabilirsiniz.<br>
         3. Noktalı Virgül: <code>Kelime; Türkçe Anlamı; Örnek Kullanım</code><br>
-        4. JSON Dizisi: <code>[ {"word": "...", "meaning": "...", "example": "..."} ]</code>
+        4. JSON Formatı: <code>[ {"word": "...", "meaning": "...", "example": "..."} ]</code>
       </div>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn" onclick="closeBulkModal()">İptal</button>
-      <button type="button" class="btn btn-primary" onclick="saveBulkData()">Kelimeleri Ekle</button>
+      <button type="button" class="btn" onclick="window.app.closeBulkModal()">İptal</button>
+      <button type="button" class="btn btn-primary" onclick="window.app.saveBulkData()">Kelimeleri Ekle</button>
     </div>
   </div>
 </div>
@@ -524,967 +269,10 @@
 <!-- Bildirim Toast -->
 <div class="toast" id="toast">İşlem başarıyla gerçekleştirildi.</div>
 
-<script>
-  // ==========================================================
-  // DİNAMİK KELİME LİSTESİ (100 KELİME MEVCUT)
-  // Yeni kelimeleri doğrudan buraya ekleyebilir veya sayfadaki
-  // 'Toplu Veri Ekle' arayüzünden ekleyebilirsiniz.
-  // ==========================================================
-  const initialWords = [
-  {
-    "no": 1,
-    "word": "The",
-    "meaning": "(Tanım belirtiyor, bir kavramın bilindik olduğunu belirtmek amacıyla kullanılıyor.)",
-    "example": "The Office, the theatre"
-  },
-  {
-    "no": 2,
-    "word": "Be",
-    "meaning": "Ol(mak), var olmal, bulunmak (ayrıca başka bir çok anlamı bulunuyor)",
-    "example": "Be a teacher (öğretmen ol)"
-  },
-  {
-    "no": 3,
-    "word": "To",
-    "meaning": "(ismin yönelme hali) (ayrıca başka bir çok anlamı bulunuyor)",
-    "example": "To you (sana), Listen to me (beni dinle), I am happy to work here (Burada çalışmaktan mutluyum)"
-  },
-  {
-    "no": 4,
-    "word": "Of",
-    "meaning": "-li, -e yönelik, ilişkili, bağlantılı (ayrıca başka bir çok anlamı bulunuyor)",
-    "example": "First of all (ilk olarak), Department of Finance (Finans Bölümü), Out of (dışında)"
-  },
-  {
-    "no": 5,
-    "word": "And",
-    "meaning": "Ve",
-    "example": "Domato and potato (domates ve patates)"
-  },
-  {
-    "no": 6,
-    "word": "A",
-    "meaning": "Bir, herhangi bir, belirli bir tür veya nitelikteki",
-    "example": "A mouse (bir fare), Have a bath (banyo yapmak), a little bit (azıcık)"
-  },
-  {
-    "no": 7,
-    "word": "In",
-    "meaning": "İçeri, iç, içinde (ayrıca başka bir çok anlamı bulunuyor)",
-    "example": "Get in the car (arabanın içine bin, arabaya bin), in general (genellikle), built-in (gömme, ankastre, iç yapıya dahil)"
-  },
-  {
-    "no": 8,
-    "word": "That",
-    "meaning": "Şu, o (mesafe belirtiyor, uzaktaki kavramlar için kullanılıyor)",
-    "example": "That is a chair. (şu bir sandalyedir.), that place (orası, ora, şurası, şura)"
-  },
-  {
-    "no": 9,
-    "word": "Have",
-    "meaning": "Sahip olmak, elinde tutmak, yapmak (ayrıca başka bir çok anlamı bulunuyor)",
-    "example": "I have a car. (Arabam var.), have a nap (kestirmek), have mercy (acımak)"
-  },
-  {
-    "no": 10,
-    "word": "I",
-    "meaning": "Ben",
-    "example": "I am a student. (Ben bir öğrenciyim.)"
-  },
-  {
-    "no": 11,
-    "word": "It",
-    "meaning": "O, ona",
-    "example": "It is a pencil. (O bir kalem.)"
-  },
-  {
-    "no": 12,
-    "word": "For",
-    "meaning": "İçin, yönünden, dair (ayrıca başka bir çok anlamı bulunuyor)",
-    "example": "For you (senin için), Look for (aramak), for now (şimdilik)"
-  },
-  {
-    "no": 13,
-    "word": "Not",
-    "meaning": "Yok, değil, olumsuzluk, haricinde (ayrıca başka bir çok anlamı bulunuyor)",
-    "example": "It is not a monster. (O bir canavar değil.), not like yours (seninki/sizinki gibi değil)"
-  },
-  {
-    "no": 14,
-    "word": "On",
-    "meaning": "Üzerinde, hazır, çalışır (ayrıca başka bir çok anlamı bulunuyor)",
-    "example": "It is a apple on the table. (Masanın üzerinde elma var.), turn on (açmak)"
-  },
-  {
-    "no": 15,
-    "word": "With",
-    "meaning": "İle, birlikte, nedeniyle (ayrıca başka bir çok anlamı bulunuyor)",
-    "example": "With her (onunla), with glory (gururla)"
-  },
-  {
-    "no": 16,
-    "word": "He",
-    "meaning": "O (erkekler için kullanılıyor)",
-    "example": "He is a a teacher. (O bir öğretmen [ve onun erkek olduğunu anlıyoruz].)"
-  },
-  {
-    "no": 17,
-    "word": "As",
-    "meaning": "Olarak, gibi, kadar (ayrıca başka bir çok anlamı bulunuyor)",
-    "example": "As a whole (bütün olarak), as soon as possible (bir an önce), as a result (sonuç olarak)"
-  },
-  {
-    "no": 18,
-    "word": "You",
-    "meaning": "Sen,siz, sana, size (vb. diğer çekimler)",
-    "example": "Thank you ([sana/size] + teşekkür ederim), you are a genius (sen bir dahisin)"
-  },
-  {
-    "no": 19,
-    "word": "Do",
-    "meaning": "Yapmak, etmek (ayrıca başka bir çok anlamı bulunuyor)",
-    "example": "I do dishes (bulaşıkları yıkarım), do you like dolphins? (yunusları sever misin?)"
-  },
-  {
-    "no": 20,
-    "word": "At",
-    "meaning": "Üzere, nezdinde, saatinde, -de (ayrıca başka bir çok anlamı bulunuyor)",
-    "example": "At 8 o’clock (Saat sekizde), at night (gece vaktinde), at work (işte)"
-  },
-  {
-    "no": 21,
-    "word": "This",
-    "meaning": "Bu, buradaki",
-    "example": "For this reason (bu nedenle), this desk (bu masa)"
-  },
-  {
-    "no": 22,
-    "word": "But",
-    "meaning": "Ama, fakat",
-    "example": "He is a good person but I don’t know him very well (o iyi biri ama onu çok tanımıyorum), last but one (sondan bir önceki)"
-  },
-  {
-    "no": 23,
-    "word": "His",
-    "meaning": "Onun, ona ait (erkekler için)",
-    "example": "His pencil (onun kalemi), his feelings (onun duyguları)"
-  },
-  {
-    "no": 24,
-    "word": "By",
-    "meaning": "-e, -inden, tarafından, itibarıyla, boyunca (ayrıca başka bir çok anlamı bulunuyor)",
-    "example": "Stop by (uğramak), affected by something (bir şeye tutulmak), by goverment (hükümet tarafından)"
-  },
-  {
-    "no": 25,
-    "word": "From",
-    "meaning": "-den, -dan, itibaren, istinaden, beri (ayrıca başka bir çok anlamı bulunuyor)",
-    "example": "Benefit from something (bir şeyden yararlanmak), apart from (haricinde), from 80’s to 2000’s (80’lerden 2000’lere)"
-  },
-  {
-    "no": 26,
-    "word": "They",
-    "meaning": "Onlar (erkekler için)",
-    "example": "They are actors (Onlar aktör), where are they? (onlar nerede?)"
-  },
-  {
-    "no": 27,
-    "word": "We",
-    "meaning": "Biz",
-    "example": "We are champions (biz şampiyonlarız), do we know each other? (birbirimizi tanıyor muyuz?)"
-  },
-  {
-    "no": 28,
-    "word": "Say",
-    "meaning": "Söylemek, laflamak, demek, söz",
-    "example": "Final say (son söz), say goodbye (vedalaşmak, hoşçakal demek), something to say (söyleyecek bir şey)"
-  },
-  {
-    "no": 29,
-    "word": "Her",
-    "meaning": "Ona, ona it (kadınlar için kullanılıyor)",
-    "example": "Mother and her daugher (anne ve kızı), her age (onun yaşı)"
-  },
-  {
-    "no": 30,
-    "word": "She",
-    "meaning": "O (kadınlar için kullanılıyor)",
-    "example": "She plays guitar (o gitar çalıyor)"
-  },
-  {
-    "no": 31,
-    "word": "Or",
-    "meaning": "Ya da, veya",
-    "example": "Burger or pizza (hamburger ya da pizza)"
-  },
-  {
-    "no": 32,
-    "word": "An",
-    "meaning": "Bir (sesli harfle başlayan kelimelerin öncesinde kullanılıyor)",
-    "example": "An elephant (bir fil), an office (bir ofis)"
-  },
-  {
-    "no": 33,
-    "word": "Will",
-    "meaning": "Gelecek zaman kipi, irade, vasiyet (ayrıca başka bir çok anlamı bulunuyor)",
-    "example": "I will be there (orada olacağım), her will (onun vasiyeti)"
-  },
-  {
-    "no": 34,
-    "word": "My",
-    "meaning": "Benim",
-    "example": "My teacher (öğretmenim), my dream job (hayalimdeki meslek)"
-  },
-  {
-    "no": 35,
-    "word": "One",
-    "meaning": "Bir, tek, biri",
-    "example": "One by one (birer birer), one half (yarısı), little one (ufaklık, küçük biri)"
-  },
-  {
-    "no": 36,
-    "word": "All",
-    "meaning": "Tüm, bütün, hepsi",
-    "example": "All the time (her zaman), all creation (tüm evren), all genres (bütün türler)"
-  },
-  {
-    "no": 37,
-    "word": "Would",
-    "meaning": "Koşullu dilek, -ecekti,",
-    "example": "Would like (istemek), would rather (tercih etmek), If we were home he would like to come here (evde olsaydık buraya gelmek isteyecekti)"
-  },
-  {
-    "no": 38,
-    "word": "There",
-    "meaning": "Ora, orada, oradaki, şura, şurada, şuradaki",
-    "example": "There is a bank (orada bir banka var), get there (oraya/şuraya gitmek)"
-  },
-  {
-    "no": 39,
-    "word": "Their",
-    "meaning": "Onların",
-    "example": "Earn their trust (onların güvenini kazanmak), on their own (kendi kendilerine)"
-  },
-  {
-    "no": 40,
-    "word": "What",
-    "meaning": "Ne, neyi, cisim,şey (ayrıca başka bir çok anlamı bulunuyor)",
-    "example": "In what follows (devamında), what is your name? (ismin(iz) ne?), what are his capabilities? (onun yetenekleri nelerdir?)"
-  },
-  {
-    "no": 41,
-    "word": "So",
-    "meaning": "Böylece, bu yüzden, bu nedenle, öyle, böyle, demek ki (ayrıca başka bir çok anlamı bulunuyor)",
-    "example": "So it begins (demek ki başlıyor), I was sick so I couldn’t do homework (Hastaydım bu yüzden ödevimi yapamadım), so and so (vesaire)"
-  },
-  {
-    "no": 42,
-    "word": "Up",
-    "meaning": "Yukarı, artış, çıkış, yüksekte (ayrıca başka bir çok anlamı bulunuyor)",
-    "example": "She looked up at the skies (O [yukarı doğru] gökyüzüne baktı, I wake up early (erken kalkarım), It’s up to you (sana kalmış)"
-  },
-  {
-    "no": 43,
-    "word": "Out",
-    "meaning": "Çıkış, dışarıda, dış, uzakta olan (ayrıca başka bir çok anlamı bulunuyor)",
-    "example": "Get out (çık dışarı), work out (egzersiz yapmak), find out (anlamak)"
-  },
-  {
-    "no": 44,
-    "word": "If",
-    "meaning": "Eğer, rağmen, sözde (ayrıca başka bir çok anlamı bulunuyor)",
-    "example": "If else (eğer başkaysa), what-if (varsayımsal), see if it works (çalışıp çalışmadığına bakmak)"
-  },
-  {
-    "no": 45,
-    "word": "About",
-    "meaning": "Hakkında, dair, üzere (ayrıca başka bir çok anlamda kullanılabiliyor)",
-    "example": "It is not about you (Seninle ilgili değil), moon about (dalgın dalgın durmak), the lecture is about (ders tarih hakkındadır)"
-  },
-  {
-    "no": 46,
-    "word": "Who",
-    "meaning": "Kim",
-    "example": "Who is there? (Orada kim var?), Who is the president of the USA (ABD’nin başkanı kimdir?) An teacher is someone who teaches to students (öğretmen öğrencilere öğreten bir kimsedir)"
-  },
-  {
-    "no": 47,
-    "word": "Get",
-    "meaning": "Almak, edinmek, elde etmek, kazanmak (ayrıca başka bir çok anlamı bulunuyor)",
-    "example": "Get some supplies (Biraz malzeme al)), get trophy (kupa almak), get a job (bir meslek edin)"
-  },
-  {
-    "no": 48,
-    "word": "Which",
-    "meaning": "Hangi, hangisi",
-    "example": "Which day (hangi gün), which office (hangi ofis), tell which is which (hangisinin hangisi olduğunu ayırt etmek)"
-  },
-  {
-    "no": 49,
-    "word": "Go",
-    "meaning": "Gitmek, çıkmak, hareket etmek, girmek, başlamak (ayrıca başka bir çok anlamı bulunuyor)",
-    "example": "He goes to school (o okula gider), I go outside (dışarıya çıkıyorum)"
-  },
-  {
-    "no": 50,
-    "word": "Me",
-    "meaning": "Bende, bana, benim",
-    "example": "It’s me (benim [sorulan soruya cevap verme anlamında kullanılıyor])"
-  },
-  {
-    "no": 51,
-    "word": "When",
-    "meaning": "Ne zaman",
-    "example": "When do we go? (ne zaman gideriz?)"
-  },
-  {
-    "no": 52,
-    "word": "make",
-    "meaning": "Yapmak, etmek, sağlamak (ayrıca başka bir çok anlamı bulunuyor)",
-    "example": "I will make a cake (pasta yapacağım), make me happy (beni mutlu et)"
-  },
-  {
-    "no": 53,
-    "word": "Can",
-    "meaning": "Olabilmek, yapabilmek, teneke kutu",
-    "example": "I can help you (sana yardım edebilirim), it is a can (o bir teneke kutu)"
-  },
-  {
-    "no": 54,
-    "word": "Like",
-    "meaning": "Sevmek, benzemek, beğenmek, hoşlanmak",
-    "example": "I like pizza (pizza severim), he is not like you (o sana benzemiyor)"
-  },
-  {
-    "no": 55,
-    "word": "Time",
-    "meaning": "Zaman, süre, kere",
-    "example": "How many times kaç kere), it is time to sleep (uyuma zamanı), time-out (süre bitimi)"
-  },
-  {
-    "no": 56,
-    "word": "No",
-    "meaning": "Hayır, yok, ret, hiç",
-    "example": "I said no (hayır dedim), She voted no (O hayır oyu verdi), no way (hiç yolu yok), no one (hiç kimse)"
-  },
-  {
-    "no": 57,
-    "word": "Just",
-    "meaning": "Şimdi, sadece, yalnızca, az önce, tam (ayrıca başka bir çok anlamı bulunuyor)",
-    "example": "I have just arrived (az önce geldim), it is just a squirrel (o sadece bir sincap), just now (şu anda)"
-  },
-  {
-    "no": 58,
-    "word": "Him",
-    "meaning": "Ona, onu",
-    "example": "Do you like him? (Ondan hoşlanıyor musun?)"
-  },
-  {
-    "no": 59,
-    "word": "Know",
-    "meaning": "Bilmek, öğrenmek, tanımak",
-    "example": "I know him (onu tanıyorum), she knows something (o bir şeyler biliyor)"
-  },
-  {
-    "no": 60,
-    "word": "Take",
-    "meaning": "Almak, (fotoğraf) çekmek, götürmek (ayrıca başka bir çok anlamı bulunuyor)",
-    "example": "I will take a shower (duş alacağım), she took some photographs (o birkaç tane fotoğraf çekti), take me home (beni eve götür)"
-  },
-  {
-    "no": 61,
-    "word": "People",
-    "meaning": "İnsanlar, halk, millet",
-    "example": "We are people (biz insanız), important people (önemli insanlar), common people (sıradan insanlar), crowd of people (kitle, kalabalık insan grubu)"
-  },
-  {
-    "no": 62,
-    "word": "Into",
-    "meaning": "İçine, içeriye, -e, -a, -in içine",
-    "example": "Into the car (arabanın içine), into the room (odanın içine)"
-  },
-  {
-    "no": 63,
-    "word": "Year",
-    "meaning": "Yıl, sene, yaş",
-    "example": "Happy new year (yeni yılın kutlu olsun), I am 28 years old (ben 28 yaşındayım), eventful year (olaylarla dolu sene)"
-  },
-  {
-    "no": 64,
-    "word": "Your",
-    "meaning": "Senin, sizin",
-    "example": "Your choice (senin/sizin seçimin([iz]), your opinion (senin/sizin düşüncen[iz])"
-  },
-  {
-    "no": 65,
-    "word": "Good",
-    "meaning": "İyi, güzel, fayda",
-    "example": "Good choice (iyi seçim), good luck (iyi şanslar)"
-  },
-  {
-    "no": 66,
-    "word": "Some",
-    "meaning": "Biraz, bazı, birkaç (ayrıca cümle içinde kullanımına göre başka anlamları bulunuyor)",
-    "example": "Some of them (bazıları), some practices (bazı uygulamalar), some ruins (bazı kalıntılar)"
-  },
-  {
-    "no": 67,
-    "word": "Could",
-    "meaning": "Yapabilmek, olabilmek, “can”in geçmiş zaman hali",
-    "example": "I could do it when I was younger (Gençken yapabilirdim), I could use some help (biraz yardıma ihtiyacım var)"
-  },
-  {
-    "no": 68,
-    "word": "Them",
-    "meaning": "Onlara, onları",
-    "example": "Don’t follow them (onları takip etme)"
-  },
-  {
-    "no": 69,
-    "word": "See",
-    "meaning": "Görmek, anlamak (ayrıca cümle içinde kullanımına göre başka anlamları bulunuyor)",
-    "example": "I see (görüyorum, anlıyorum), I see double (çift görüyorum)"
-  },
-  {
-    "no": 70,
-    "word": "Other",
-    "meaning": "Diğer, başka, öteki",
-    "example": "Other people (diğer insanlar), the other world (öteki dünya), some other time (başka zaman)"
-  },
-  {
-    "no": 71,
-    "word": "Than",
-    "meaning": "-den, -e göre, hariç, nazaran (ayrıca cümle içinde kullanımına göre başka anlamları bulunuyor)",
-    "example": "More than feelings (duygulardan daha fazlası), I would prefer juice rather than coke (Kolaya nazaran meyve suyunu tercih ederim)"
-  },
-  {
-    "no": 72,
-    "word": "Then",
-    "meaning": "O zamanlar, o halde, öyleyse (ayrıca cümle içinde kullanımına göre başka anlamları bulunuyor)",
-    "example": "Back then, I adored you (o zamanlar sana hayrandım)"
-  },
-  {
-    "no": 73,
-    "word": "Now",
-    "meaning": "Şimdi, şu an, şimdiye ait",
-    "example": "Right now (Hemen şimdi), he is working now (o şu an çalışıyor)"
-  },
-  {
-    "no": 74,
-    "word": "Look",
-    "meaning": "Bakmak, görünmek, görünüş (ayrıca cümle içinde kullanımına göre başka anlamları bulunuyor)",
-    "example": "I look into your eyes (gözlerinin içine bakıyorum), he looks handsome (yakışıklı görünüyor)"
-  },
-  {
-    "no": 75,
-    "word": "Only",
-    "meaning": "Sadece, tek, sırf, yalnızca",
-    "example": "Only 2 euro (sadece 2 euro), only child (tek çocuk)"
-  },
-  {
-    "no": 76,
-    "word": "Come",
-    "meaning": "Gelmek (ayrıca cümle içinde kullanımına göre başka anlamları bulunuyor)",
-    "example": "I come home (eve geliyorum), come to mind (akla gelmek)"
-  },
-  {
-    "no": 77,
-    "word": "Its",
-    "meaning": "Onun",
-    "example": "Don’t judge a book by its cover ([deyim] insanı dış görünüşüne göre yargılamayın)"
-  },
-  {
-    "no": 78,
-    "word": "Over",
-    "meaning": "Fazla, bitmiş, üzerine, ötede (ayrıca cümle içinde kullanımına göre başka anlamları bulunuyor)",
-    "example": "It’s over (bitti), get over something (bir şeyi atlatmak), he must be over fifty (50’nin üzerinde olmalı), a table over there (ötedeki bmasa)"
-  },
-  {
-    "no": 79,
-    "word": "Think",
-    "meaning": "Düşünmek, sanmak",
-    "example": "I am thinking about you (senin hakkında düşünüyorum), I think you misunderstood me (sanırım beni yanlış anladın)"
-  },
-  {
-    "no": 80,
-    "word": "Also",
-    "meaning": "Ayrıca, da (ayrıca cümle içinde kullanımına göre başka anlamları bulunuyor)",
-    "example": "I also called you (ayrıca seni aradım), we must also think that (şunu da düşünmeliyiz)"
-  },
-  {
-    "no": 81,
-    "word": "Back",
-    "meaning": "Arka, geri (ayrıca cümle içinde kullanımına göre başka anlamları bulunuyor)",
-    "example": "Turn back (geri dön)"
-  },
-  {
-    "no": 82,
-    "word": "After",
-    "meaning": "Sonra, ertesi (ayrıca cümle içinde kullanımına göre başka anlamları bulunuyor)",
-    "example": "Call me later (beni sonra ara), the day after (ertesi gün),"
-  },
-  {
-    "no": 83,
-    "word": "Use",
-    "meaning": "Kullanmak, kullanım, faydalanmak (ayrıca cümle içinde kullanımına göre başka anlamları bulunuyor)",
-    "example": "Use a notebook (dizüstü bilgisayar kullanmak), common use (genel kullanım), you used me (benden faydalandın)"
-  },
-  {
-    "no": 84,
-    "word": "Two",
-    "meaning": "İki",
-    "example": "Two apples (iki elma)"
-  },
-  {
-    "no": 85,
-    "word": "How",
-    "meaning": "Nasıl",
-    "example": "How to use (nasıl kullanılır), this story tell us how we succeeded (bu hikaye nasıl başarılı olduğumuzu anlatıyor)"
-  },
-  {
-    "no": 86,
-    "word": "Our",
-    "meaning": "Bizim",
-    "example": "Our team (takımımız)"
-  },
-  {
-    "no": 87,
-    "word": "Work",
-    "meaning": "Çalışmak, iş, eser",
-    "example": "I work as an engineer (mühendis olarak çalışıyorum), work of art (sanat eseri)"
-  },
-  {
-    "no": 88,
-    "word": "First",
-    "meaning": "İlk, birinci, başlangıç (ayrıca cümle içinde kullanımına göre başka anlamları bulunuyor)",
-    "example": "I come first (ilk ben geldim), first of all (herşeyden önce), first aid (ilk yardım), he was first (o birinciydi)"
-  },
-  {
-    "no": 89,
-    "word": "Well",
-    "meaning": "İyi, kaynak (su vb.), kuyu (ayrıca cümle içinde kullanımına göre başka anlamları bulunuyor)",
-    "example": "Do it well (iyi yap), water well (su kuyusu)"
-  },
-  {
-    "no": 90,
-    "word": "Way",
-    "meaning": "Yol (ayrıca cümle içinde kullanımına göre başka anlamları bulunuyor)",
-    "example": "This way goes to main street (bu yol ana caddeye gidiyor), is there any other way? (başka bir yolu var mı)"
-  },
-  {
-    "no": 91,
-    "word": "Even",
-    "meaning": "Bile, hatta, çift (ayrıca cümle içinde kullanımına göre başka anlamları bulunuyor)",
-    "example": "Even if you do it, our manager may not accept it (yapsan bile müdürümüz kabul etmeyebilir), you should even see it (hatta onu görmelisin), odd or even (tek mi çift mi oyunu), even number (çift rakam)"
-  },
-  {
-    "no": 92,
-    "word": "New",
-    "meaning": "Yeni (ayrıca cümle içinde kullanımına göre başka anlamları bulunuyor)",
-    "example": "New computer (yeni bilgisayar), new recruits (yeni elemanlar)"
-  },
-  {
-    "no": 93,
-    "word": "Want",
-    "meaning": "İstemek, arzulamak",
-    "example": "I want a candy (şeker istiyorum), ı want to be an engineer (mühendis olmak istiyorum, I want you (seni arzuluyorum)"
-  },
-  {
-    "no": 94,
-    "word": "Because",
-    "meaning": "Çünkü (ayrıca cümle içinde kullanımına göre başka anlamları bulunuyor)",
-    "example": "I can’t work today because I am sick (Bugün çalışamıyorum çünkü hastayım), because of you (senin yüzünden)"
-  },
-  {
-    "no": 95,
-    "word": "Any",
-    "meaning": "Hiç, herhangi (ayrıca cümle içinde kullanımına göre başka anlamları bulunuyor)",
-    "example": "Any juice left? (hiç meyve suyu kaldı mı?), you can choose any of them (Onlardan herhangi birini seçebilirsin[iz])"
-  },
-  {
-    "no": 96,
-    "word": "These",
-    "meaning": "Bunlar",
-    "example": "These are apple trees (bunlar elma ağaçlarıdır)"
-  },
-  {
-    "no": 97,
-    "word": "Give",
-    "meaning": "Vermek, getirmek (ayrıca cümle içinde kullanımına göre başka anlamları bulunuyor)",
-    "example": "Can you give me a pencil? (Bana bir kalem verebilir misin?), Give birth (doğurmak, dünyaya getirmek)"
-  },
-  {
-    "no": 98,
-    "word": "Day",
-    "meaning": "Gün",
-    "example": "Thursday is the 4th day of the week (perşembe haftanın 4. günüdür)"
-  },
-  {
-    "no": 99,
-    "word": "Most",
-    "meaning": "En, en çok, çoğu",
-    "example": "The most important (en önemli), I love him most (en çok onu seviyorum), most people (çoğu insan)"
-  },
-  {
-    "no": 100,
-    "word": "Us",
-    "meaning": "Biz (ayrıca US şeklinde ABD kısaltması larak kullanılıyor)",
-    "example": "He like us (O bizi sevdi), she give us a reason to quit (bize bırakmamız için bir neden veriyor)"
-  }
-];
-
-  // LocalStorage anahtarları
-  const STORAGE_KEY_WORDS = 'vocab_custom_words_v1';
-  const STORAGE_KEY_ANSWERS = 'vocab_user_answers_v1';
-
-  // Veri havuzu
-  let wordsList = [];
-  let userAnswers = {};
-
-  // Görünürlük Durumu (Başlıklardaki 'hidden' class'ına göre belirlenir)
-  // Koddan 'hidden' class'ını sildiğinizde varsayılan olarak açık başlayacaktır.
-  let isMeaningsVisible = false;
-  let isExamplesVisible = false;
-
-  // Sayfa yüklendiğinde başlat
-  document.addEventListener('DOMContentLoaded', () => {
-    const thMeaning = document.getElementById('thMeaning');
-    const thExample = document.getElementById('thExample');
-
-    // Başlıkta 'hidden' silinmişse açık olarak başlat
-    isMeaningsVisible = !thMeaning.classList.contains('hidden');
-    isExamplesVisible = !thExample.classList.contains('hidden');
-    updateToggleButtons();
-
-    loadData();
-    renderTable();
-    updateProgress();
-  });
-
-  // Verileri yükle (Varsayılan + Kullanıcının arayüzden eklediği kelimeler)
-  function loadData() {
-    const savedCustomWords = localStorage.getItem(STORAGE_KEY_WORDS);
-    if (savedCustomWords) {
-      try {
-        const customWords = JSON.parse(savedCustomWords);
-        wordsList = [...initialWords, ...customWords];
-      } catch (e) {
-        wordsList = [...initialWords];
-      }
-    } else {
-      wordsList = [...initialWords];
-    }
-
-    const savedAnswers = localStorage.getItem(STORAGE_KEY_ANSWERS);
-    if (savedAnswers) {
-      try {
-        userAnswers = JSON.parse(savedAnswers);
-      } catch (e) {
-        userAnswers = {};
-      }
-    }
-  }
-
-  // Tabloyu Dinamik Olarak Render Et
-  function renderTable(filterQuery = '') {
-    const tbody = document.getElementById('vocabTableBody');
-    const query = filterQuery.toLowerCase().trim();
-
-    const meaningHiddenClass = isMeaningsVisible ? '' : 'hidden';
-    const exampleHiddenClass = isExamplesVisible ? '' : 'hidden';
-
-    let rowsHtml = '';
-    let filteredCount = 0;
-
-    wordsList.forEach((item) => {
-      const wordMatch = item.word && item.word.toLowerCase().includes(query);
-      const meaningMatch = item.meaning && item.meaning.toLowerCase().includes(query);
-      const answerMatch = userAnswers[item.no] && userAnswers[item.no].toLowerCase().includes(query);
-
-      if (query && !wordMatch && !meaningMatch && !answerMatch) {
-        return;
-      }
-
-      filteredCount++;
-      const currentAns = userAnswers[item.no] || '';
-      const isFilled = currentAns.trim().length > 0;
-
-      rowsHtml += `
-        <tr data-no="${item.no}">
-          <td class="col-no">${item.no}</td>
-          <td class="col-word"><strong>${escapeHtml(item.word)}</strong></td>
-          <td class="col-input">
-            <input 
-              type="text" 
-              class="student-input ${isFilled ? 'filled' : ''}" 
-              data-no="${item.no}" 
-              value="${escapeHtml(currentAns)}"
-              placeholder="Tahmininizi / cevabınızı yazın..." 
-              oninput="onAnswerChange(this, ${item.no})"
-              onkeydown="handleInputKeydown(event, ${item.no})"
-            >
-          </td>
-          <!-- 'hidden' class'ı koddan silindiğinde burası da doğrudan açık gelir -->
-          <td class="col-meaning ${meaningHiddenClass}" data-cell="meaning">
-            ${escapeHtml(item.meaning)}
-          </td>
-          <td class="col-example ${exampleHiddenClass}" data-cell="example">
-            ${escapeHtml(item.example)}
-          </td>
-          <td class="col-actions">
-            <button type="button" class="btn-peek" title="Sadece bu kelimenin anlamını ve örneğini göster/gizle" onclick="toggleRowPeek(${item.no})">
-              👁️
-            </button>
-          </td>
-        </tr>
-      `;
-    });
-
-    if (filteredCount === 0) {
-      rowsHtml = `<tr><td colspan="6" style="text-align: center; padding: 24px; color: #94a3b8;">Aramanızla eşleşen kelime bulunamadı.</td></tr>`;
-    }
-
-    tbody.innerHTML = rowsHtml;
-  }
-
-  // Öğrenci cevabı yazıldığında anında kaydet
-  function onAnswerChange(inputElem, no) {
-    const val = inputElem.value;
-    userAnswers[no] = val;
-    if (val.trim().length > 0) {
-      inputElem.classList.add('filled');
-    } else {
-      inputElem.classList.remove('filled');
-    }
-    localStorage.setItem(STORAGE_KEY_ANSWERS, JSON.stringify(userAnswers));
-    updateProgress();
-  }
-
-  // Enter tuşuna basıldığında bir sonraki input'a odaklan
-  function handleInputKeydown(event, currentNo) {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      const currentInput = event.target;
-      const allInputs = Array.from(document.querySelectorAll('.student-input'));
-      const currentIndex = allInputs.indexOf(currentInput);
-      if (currentIndex !== -1 && currentIndex + 1 < allInputs.length) {
-        allInputs[currentIndex + 1].focus();
-      }
-    }
-  }
-
-  // İlerleme çubuğunu güncelle
-  function updateProgress() {
-    const total = wordsList.length;
-    let filled = 0;
-    wordsList.forEach(w => {
-      if (userAnswers[w.no] && userAnswers[w.no].trim().length > 0) {
-        filled++;
-      }
-    });
-
-    const percent = total > 0 ? Math.round((filled / total) * 100) : 0;
-    document.getElementById('progressFill').style.width = `${percent}%`;
-    document.getElementById('progressText').textContent = `${filled} / ${total} tamamlandı (%${percent})`;
-  }
-
-  // Buton metinlerini güncelle
-  function updateToggleButtons() {
-    const txtMeaning = document.getElementById('txtMeaningToggle');
-    const txtExample = document.getElementById('txtExampleToggle');
-    if (txtMeaning) {
-      txtMeaning.textContent = isMeaningsVisible ? 'Türkçe Anlamları Gizle' : 'Türkçe Anlamları Göster';
-    }
-    if (txtExample) {
-      txtExample.textContent = isExamplesVisible ? 'Örnekleri Gizle' : 'Örnekleri Göster';
-    }
-  }
-
-  // Türkçe Anlamları Toplu Göster / Gizle
-  function toggleAllMeanings() {
-    isMeaningsVisible = !isMeaningsVisible;
-    const thMeaning = document.getElementById('thMeaning');
-    thMeaning.classList.toggle('hidden', !isMeaningsVisible);
-    document.querySelectorAll('#vocabTableBody td[data-cell="meaning"]').forEach(td => {
-      td.classList.toggle('hidden', !isMeaningsVisible);
-    });
-    updateToggleButtons();
-  }
-
-  // Örnekleri Toplu Göster / Gizle
-  function toggleAllExamples() {
-    isExamplesVisible = !isExamplesVisible;
-    const thExample = document.getElementById('thExample');
-    thExample.classList.toggle('hidden', !isExamplesVisible);
-    document.querySelectorAll('#vocabTableBody td[data-cell="example"]').forEach(td => {
-      td.classList.toggle('hidden', !isExamplesVisible);
-    });
-    updateToggleButtons();
-  }
-
-  // Satır bazlı tekil göster / gizle (İpucu)
-  function toggleRowPeek(no) {
-    const tr = document.querySelector(`tr[data-no="${no}"]`);
-    if (!tr) return;
-    const meaningTd = tr.querySelector('td[data-cell="meaning"]');
-    const exampleTd = tr.querySelector('td[data-cell="example"]');
-    if (meaningTd) meaningTd.classList.toggle('hidden');
-    if (exampleTd) exampleTd.classList.toggle('hidden');
-  }
-
-  // Arama / Filtreleme
-  function filterTable() {
-    const q = document.getElementById('searchInput').value;
-    renderTable(q);
-  }
-
-  // Cevapları Temizle
-  function clearUserInputs() {
-    if (confirm('Yazdığınız tüm cevapları sıfırlamak istediğinize emin misiniz?')) {
-      userAnswers = {};
-      localStorage.removeItem(STORAGE_KEY_ANSWERS);
-      renderTable(document.getElementById('searchInput').value);
-      updateProgress();
-      showToast('Cevaplar başarıyla sıfırlandı.');
-    }
-  }
-
-  // Toplu Veri Ekleme Modal İşlemleri
-  function openBulkModal() {
-    document.getElementById('bulkModal').classList.add('active');
-    document.getElementById('bulkInput').focus();
-  }
-
-  function closeBulkModal() {
-    document.getElementById('bulkModal').classList.remove('active');
-  }
-
-  // Toplu Veri Kaydetme
-  function saveBulkData() {
-    const raw = document.getElementById('bulkInput').value.trim();
-    if (!raw) {
-      alert('Lütfen eklenecek verileri girin.');
-      return;
-    }
-
-    let newEntries = [];
-
-    // JSON formatı kontrolü
-    if (raw.startsWith('[') && raw.endsWith(']')) {
-      try {
-        const parsed = JSON.parse(raw);
-        if (Array.isArray(parsed)) {
-          newEntries = parsed.map(item => ({
-            word: item.word || item.kelime || '',
-            meaning: item.meaning || item.anlam || item.cevirisi || '',
-            example: item.example || item.ornek || ''
-          }));
-        }
-      } catch (err) {
-        // JSON değilse satır satır okumaya geç
-      }
-    }
-
-    // Satır satır okuma (Pipe |, Tab \t, Noktalı virgül ;)
-    if (newEntries.length === 0) {
-      const lines = raw.split('\n');
-      lines.forEach(line => {
-        const trimmed = line.trim();
-        if (!trimmed) return;
-
-        let parts = [];
-        if (trimmed.includes('\t')) {
-          parts = trimmed.split('\t');
-        } else if (trimmed.includes('|')) {
-          parts = trimmed.split('|');
-        } else if (trimmed.includes(';')) {
-          parts = trimmed.split(';');
-        } else if (trimmed.includes(',')) {
-          parts = trimmed.split(',');
-        } else {
-          parts = [trimmed];
-        }
-
-        const word = (parts[0] || '').trim();
-        const meaning = (parts[1] || '').trim();
-        const example = (parts[2] || '').trim();
-
-        if (word) {
-          newEntries.push({ word, meaning, example });
-        }
-      });
-    }
-
-    if (newEntries.length === 0) {
-      alert('Hiçbir kelime ayrıştırılamadı. Lütfen biçimi kontrol edin.');
-      return;
-    }
-
-    // Mevcut en yüksek No'yu bul
-    let maxNo = 0;
-    wordsList.forEach(w => {
-      const n = parseInt(w.no, 10);
-      if (!isNaN(n) && n > maxNo) maxNo = n;
-    });
-
-    // Yeni kayıtları numaralandır
-    const formattedEntries = newEntries.map((e, idx) => ({
-      no: maxNo + idx + 1,
-      word: e.word,
-      meaning: e.meaning,
-      example: e.example
-    }));
-
-    // Custom words'ü localStorage'a ekle
-    const savedCustomWords = localStorage.getItem(STORAGE_KEY_WORDS);
-    let customWordsList = savedCustomWords ? JSON.parse(savedCustomWords) : [];
-    customWordsList = [...customWordsList, ...formattedEntries];
-    localStorage.setItem(STORAGE_KEY_WORDS, JSON.stringify(customWordsList));
-
-    // Listeyi güncelle ve tabloyu yeniden çiz
-    wordsList = [...wordsList, ...formattedEntries];
-    document.getElementById('bulkInput').value = '';
-    closeBulkModal();
-    renderTable();
-    updateProgress();
-    showToast(`${formattedEntries.length} yeni kelime başarıyla eklendi!`);
-  }
-
-  // JSON Dışa Aktar (Koda kolayca kopyalayabilmek için)
-  function exportDataJson() {
-    const jsonText = JSON.stringify(wordsList, null, 2);
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(jsonText).then(() => {
-        showToast('Tüm kelime listesi JSON olarak panoya kopyalandı!');
-      }).catch(() => {
-        prompt('Kelime listesini kopyalayabilirsiniz:', jsonText);
-      });
-    } else {
-      prompt('Kelime listesini kopyalayabilirsiniz:', jsonText);
-    }
-  }
-
-  // HTML Karakter Kaçırma (XSS Önleme)
-  function escapeHtml(text) {
-    if (!text) return '';
-    return String(text)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
-  }
-
-  // Toast Bildirimi
-  function showToast(msg) {
-    const toast = document.getElementById('toast');
-    toast.textContent = msg;
-    toast.classList.add('show');
-    setTimeout(() => {
-      toast.classList.remove('show');
-    }, 2800);
-  }
-</script>
+<!-- Modüler Script Dosyaları -->
+<script src="js/words.js"></script>
+<script src="js/similarity.js"></script>
+<script src="js/app.js"></script>
 
 </body>
 </html>
